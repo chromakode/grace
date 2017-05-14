@@ -39,7 +39,7 @@ function takePicture() {
 }
 
 function init() {
-  navigator.getUserMedia({ video: { width, height } },
+  navigator.getUserMedia({ video: { width, height, facingMode: { exact: 'environment' } } },
     function(stream) {
       videoEl.srcObject = stream
       videoEl.onloadedmetadata = () => videoEl.play()
