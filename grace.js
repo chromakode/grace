@@ -3,13 +3,13 @@ const height = 720
 const videoEl = document.getElementById('video')
 const snapEl = document.getElementById('snap')
 
-const activeIngredients = new Set(['bread', 'chicken'])
+const activeIngredients = new Set(['bread', 'chicken', 'pork', 'beef', 'fish', 'spaghetti'])
 
 const grammar = tracery.createGrammar({
   'grace': [
-    'As we begin this meal of #noun1#. #details# #signoff#',
-    'Let us give thanks for this #noun1#. #details# #signoff#',
-    'In this plate of #noun1#',
+    'As we begin this meal. #details# #signoff#',
+    'Reflecting on this repast. #details# #signoff#',
+    'In this plate #details# #signoff#',
   ],
   'ones': [
     'family',
@@ -24,20 +24,36 @@ const grammar = tracery.createGrammar({
   ],
   'signoff': [
     'Blessed be our #ones#, our #ones#, and our #ones#.',
-    'Let us keep our #ones# in our thoughts as we enjoy this meal.',
+    'Let us keep our #ones# and #ones# in our thoughts as we enjoy this meal.',
     'With thoughts to the less fortunate #ones# than us, let us begin this meal.',
+    'May this meal bring us joy and health',
   ],
   'thanks': [
-    'with consideration for',
+    'consideration for',
     'thanks to',
     'thank you for',
-    'with gratitude for',
+    'gratitude for',
   ],
   'bread': [
     '#thanks# to the farmers who grew this wheat the grinders who made the flour and the bakers who rose the dough.',
+    'let us reflect upon the flaky crust and chewy dough',
   ],
   'chicken': [
-    '#thanks# to the chicken who gave its wings for this succulent meat',
+    'with #thanks# to the chicken who gave its wings for this succulent meat',
+    'with #thanks# to the feathered friend who provided its tasty flesh',
+  ],
+  'pork': [
+    '#thanks# to the pig for its delicious bacon',
+  ],
+  'beef': [
+    '#thanks# to the cow for converting grass into tasty beef',
+  ],
+  'fish': [
+    '#thanks# to the fish who will never swim again',
+  ],
+  'spaghetti': [
+    'let us rejoice in the fact that noodles are simply awesome',
+    'we will slurp these noodles with #thanks# to the #ones# before and after us',
   ],
 })
 
