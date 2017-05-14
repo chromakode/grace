@@ -3,9 +3,41 @@ const height = 720
 const videoEl = document.getElementById('video')
 const snapEl = document.getElementById('snap')
 
+const activeIngredients = new Set(['bread', 'chicken'])
+
 const grammar = tracery.createGrammar({
   'grace': [
-    `Thank you for this #noun1#`
+    'As we begin this meal of #noun1#. #details# #signoff#',
+    'Let us give thanks for this #noun1#. #details# #signoff#',
+    'In this plate of #noun1#',
+  ],
+  'ones': [
+    'family',
+    'friends',
+    'stomachs',
+    'ancestors',
+    'descendents',
+    'children',
+    'kindred',
+    'peers',
+    'enemies',
+  ],
+  'signoff': [
+    'Blessed be our #ones#, our #ones#, and our #ones#.',
+    'Let us keep our #ones# in our thoughts as we enjoy this meal.',
+    'With thoughts to the less fortunate #ones# than us, let us begin this meal.',
+  ],
+  'thanks': [
+    'with consideration for',
+    'thanks to',
+    'thank you for',
+    'with gratitude for',
+  ],
+  'bread': [
+    '#thanks# to the farmers who grew this wheat the grinders who made the flour and the bakers who rose the dough.',
+  ],
+  'chicken': [
+    '#thanks# to the chicken who gave its wings for this succulent meat',
   ],
 })
 
@@ -15,12 +47,19 @@ const app = new Clarifai.App(
   's-C29IbBfaCSsxisHcsED8Thu94DX3VUjs9koYKf'
 )
 
-function sayGrace(base64) {
+function sayGrace(words) {
+  const ingredients = words.filter(word => activeIngredients.has(word))
+  const details = ingredients.map(word => `#[word:${word}]${word}#`).join('')
+  const graceText = grammar.flatten(`#[noun1:${words[0]}][details:${details}]grace#`)
+  console.log(words, ingredients, graceText)
+  speechSynthesis.speak(new SpeechSynthesisUtterance(graceText))
+}
+
+function analyze(base64) {
   app.models.predict(Clarifai.FOOD_MODEL, {base64}).then(
     function(response) {
-      const words = response.outputs[0].data.concepts.map(c => c.name)
-      const graceText = grammar.flatten(`#[noun1:${words[0]}]grace#`)
-      speechSynthesis.speak(new SpeechSynthesisUtterance(graceText))
+      const words = response.outputs[0].data.concepts.filter(c => c.value > .75).map(c => c.name)
+      sayGrace(words)
     },
     function(err) {
       console.error(err)
@@ -35,7 +74,7 @@ function takePicture() {
   canvas.height = height
   ctx.drawImage(videoEl, 0, 0, width, height)
   const base64 = canvas.toDataURL('image/png;base64').split(',')[1]
-  sayGrace(base64)
+  analyze(base64)
 }
 
 function init() {
