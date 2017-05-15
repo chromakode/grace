@@ -57,9 +57,11 @@ const grammar = tracery.createGrammar({
     '#name# loved to walk long circles in the grass.',
     'making friends came easily to #name#.',
     '#name# loved to roll around in the grass',
+    '#name# was stunned before slaugher, which was supposed to result in #name# experiencing very little pain.',
   ],
   'storyend': [
-    'at the ripe old age of #age#, #name# was slaughtered, processed, and distributed by #packer#, and sold as #price# #meat# in #state#.'
+    'at the ripe old age of #age#, #name# was slaughtered, processed, and distributed by #packer#, and sold as #price# #meat# in #state#.',
+    'after #age#, #name# was converted into #price# #meat# by #packer# in #state#.',
   ],
   'storysurvived': [
     '3 #noun.s# and mate named #names#.',
