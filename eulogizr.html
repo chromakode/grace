@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+  <title>Eulogizr</title>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://sdk.clarifai.com/js/clarifai-latest.js"></script>
+  <script type="text/javascript" src="tracery.js"></script>
+  <style>
+    body { margin: 0; overflow: hidden }
+    html, body, #video, #eulogy-screen { width: 100%; height: 100%; }
+    #snap { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 15%; font-size: 5vmin; }
+    #eulogy-screen { display: none; position: relative }
+    #eulogy-screen img { position: absolute; width: 65vw; height: auto; -webkit-mask-image: radial-gradient(rgba(0, 0, 0, 1.0), transparent); }
+    #yt { width: 100%; height: 100%; }
+  </style>
+</head>
+<body>
+  <div id="camera-screen">
+    <video id="video">video stream not available.</video>
+    <button id="snap">eulogize</button>
+  </div>
+  <div id="eulogy-screen">
+    <iframe id="yt" src=""></iframe>
+  </div>
+  <script src="eulogizr.js"></script>
+</body>
+</html>
